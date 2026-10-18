@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enchulados · Zona de Repartidores</title>
+    <meta name="theme-color" content="#1B1410" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="repartidor.css" />
+  </head>
+  <body>
+    <div class="franja-superior"></div>
+
+    <header class="barra-superior">
+      <div class="marca">
+        <svg class="icono-marca" viewBox="0 0 40 40" aria-hidden="true">
+          <path
+            d="M20 5c2.4 3.6 6 4.2 6 8.2a6 6 0 1 1-12 0C14 9.2 17.6 8.6 20 5z"
+            fill="currentColor"
+          />
+          <circle
+            cx="20"
+            cy="26"
+            r="10"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.6"
+          />
+          <circle cx="20" cy="26" r="4" fill="currentColor" />
+        </svg>
+        <span>Enchulados · Repartos</span>
+      </div>
+
+      <div class="herramientas-superiores">
+        <div class="ficha-usuario">
+          <span class="avatar" id="avatarSesion">RP</span>
+          <div>
+            <b id="nombreSesion">Repartidor</b>
+            <span id="rolSesion">Domicilios</span>
+          </div>
+          <button class="boton-salir" onclick="cerrarSesion()" title="Salir">
+            Salir
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="contenido">
+      <div class="tarjeta">
+        <div class="cabecera-tarjeta">
+          <h2>Domicilios y Envíos Activos</h2>
+        </div>
+        <div class="cuerpo-tarjeta" id="listaDomicilios"></div>
+      </div>
+    </main>
+
+    <script src="repartidor.js"> </script>
+  </body>
+</html>

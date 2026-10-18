@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enchulados · Caja y Facturación</title>
+    <meta name="theme-color" content="#1B1410" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="caja.css" />
+  </head>
+  <body>
+    <div class="franja-superior"></div>
+
+    <header class="barra-superior">
+      <div class="marca">
+        <svg class="icono-marca" viewBox="0 0 40 40" aria-hidden="true">
+          <path
+            d="M20 5c2.4 3.6 6 4.2 6 8.2a6 6 0 1 1-12 0C14 9.2 17.6 8.6 20 5z"
+            fill="currentColor"
+          />
+          <circle
+            cx="20"
+            cy="26"
+            r="10"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.6"
+          />
+          <circle cx="20" cy="26" r="4" fill="currentColor" />
+        </svg>
+        <span>Enchulados · Caja</span>
+      </div>
+
+      <div class="herramientas-superiores">
+        <div class="ficha-usuario">
+          <span class="avatar" id="avatarSesion">CJ</span>
+          <div>
+            <b id="nombreSesion">Cajera</b>
+            <span id="rolSesion">Caja</span>
+          </div>
+          <button class="boton-salir" onclick="cerrarSesion()" title="Salir">
+            Salir
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="contenido">
+      <div class="cuadricula-kpi">
+        <div class="tarjeta-kpi">
+          <div class="etiqueta-kpi">Ingresos Totales Hoy</div>
+          <div class="valor-kpi" id="etiquetaTotalIngresos">$0</div>
+        </div>
+        <div class="tarjeta-kpi">
+          <div class="etiqueta-kpi">Pedidos Facturados</div>
+          <div class="valor-kpi" id="etiquetaTotalFacturados">0</div>
+        </div>
+        <div class="tarjeta-kpi">
+          <div class="etiqueta-kpi">Base / Cambio Inicial</div>
+          <div class="valor-kpi">$100.000</div>
+        </div>
+      </div>
+
+      <div class="tarjeta">
+        <div class="cabecera-tarjeta">
+          <h2>Cobros y Facturación Pendiente</h2>
+        </div>
+        <div class="contenedor-tabla">
+          <table>
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Cliente / Mesa</th>
+                <th>Detalle</th>
+                <th>Total</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="tablaCaja"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="tarjeta">
+        <div class="cabecera-tarjeta">
+          <h2>Notas y Cuadre de Caja</h2>
+          <span style="font-size: 0.78rem; color: var(--txt-suave)"
+            >Evita descuadres anotando novedades del turno</span
+          >
+        </div>
+        <div class="cuerpo-tarjeta">
+          <div class="campo-formulario">
+            <label
+              >Observaciones del turno (Billetes retenidos, base, ajustes,
+              etc.)</label
+            >
+            <textarea
+              id="textoNotasCaja"
+              placeholder="Escribe aquí cualquier novedad para el administrador..."
+            ></textarea>
+          </div>
+          <div>
+            <button class="boton boton-primario" onclick="guardarNotasCaja()">
+              Guardar Notas de Caja
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal" id="modalCobro">
+      <div class="modal-fondo" onclick="cerrarModal()"></div>
+      <div class="modal-caja">
+        <div class="modal-cabecera">
+          <h2 id="tituloCobro">Cobrar Pedido</h2>
+        </div>
+        <div class="modal-cuerpo">
+          <div class="informacion-pago" id="detalleCobro"></div>
+          <div class="campo-formulario">
+            <label>Efectivo Recibido ($)</label>
+            <input
+              type="number"
+              id="efectivoRecibido"
+              placeholder="Ej: 50000"
+              oninput="calcularVueltas()"
+            />
+          </div>
+          <div class="informacion-pago">
+            <span>Cambio / Vueltas:</span>
+            <b id="etiquetaVueltas" style="font-size: 1.1rem; color: var(--jade-d)"
+              >$0</b
+            >
+          </div>
+        </div>
+        <div class="modal-pie">
+          <button class="boton boton-linea" onclick="cerrarModal()">Cancelar</button>
+          <button class="boton boton-primario" onclick="confirmarPago()">
+            Cobrar y Facturar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div id="notificacionFlotante" class="notificacion-flotante" style="display: none"></div>
+
+    <script src="caja.js"></script>
+  </body>
+</html>

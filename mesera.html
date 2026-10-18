@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enchulados · Servicio de Salón</title>
+    <meta name="theme-color" content="#1B1410" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="mesera.css" />
+  </head>
+  <body>
+    <div class="franja-superior"></div>
+
+    <header class="barra-superior">
+      <div class="marca">
+        <svg class="icono-marca" viewBox="0 0 40 40" aria-hidden="true">
+          <path
+            d="M20 5c2.4 3.6 6 4.2 6 8.2a6 6 0 1 1-12 0C14 9.2 17.6 8.6 20 5z"
+            fill="currentColor"
+          />
+          <circle
+            cx="20"
+            cy="26"
+            r="10"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.6"
+          />
+          <circle cx="20" cy="26" r="4" fill="currentColor" />
+        </svg>
+        <span>Enchulados · Salón</span>
+      </div>
+
+      <div class="herramientas-superiores">
+        <button class="boton boton-primario" onclick="abrirModalPedido()">
+          + Pedido
+        </button>
+        <div class="ficha-usuario">
+          <span class="avatar" id="avatarSesion">MS</span>
+          <div>
+            <b id="nombreSesion">Mesera</b>
+            <span id="rolSesion">Salón</span>
+          </div>
+          <button class="boton-salir" onclick="cerrarSesion()" title="Salir">
+            Salir
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="contenido">
+      <div class="cuadricula-salon">
+        <div class="tarjeta">
+          <div class="cabecera-tarjeta">
+            <h2>Mesas (1 al 12)</h2>
+          </div>
+          <div class="cuerpo-tarjeta">
+            <div class="cuadricula-mesas" id="gridMesas"></div>
+          </div>
+        </div>
+
+        <div class="tarjeta">
+          <div class="cabecera-tarjeta">
+            <h2>Pedidos en Curso</h2>
+          </div>
+          <div class="cuerpo-tarjeta">
+            <div class="lista-pedidos-rapida" id="listaPedidosSalon"></div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal" id="modalPedido">
+      <div class="modal-fondo" onclick="cerrarModal()"></div>
+      <div class="modal-caja">
+        <div class="modal-cabecera">
+          <h2>Tomar Pedido de Mesa</h2>
+        </div>
+        <div class="modal-cuerpo">
+          <div class="campo-formulario">
+            <label>Número de Mesa</label>
+            <select id="campoMesa">
+              <option value="Mesa 1">Mesa 1</option>
+              <option value="Mesa 2">Mesa 2</option>
+              <option value="Mesa 3">Mesa 3</option>
+              <option value="Mesa 4">Mesa 4</option>
+              <option value="Mesa 5">Mesa 5</option>
+              <option value="Mesa 6">Mesa 6</option>
+              <option value="Mesa 7">Mesa 7</option>
+              <option value="Mesa 8">Mesa 8</option>
+              <option value="Mesa 9">Mesa 9</option>
+              <option value="Mesa 10">Mesa 10</option>
+              <option value="Mesa 11">Mesa 11</option>
+              <option value="Mesa 12">Mesa 12</option>
+            </select>
+          </div>
+          <div class="campo-formulario">
+            <label>Detalle del pedido</label>
+            <textarea
+              id="campoDetalle"
+              placeholder="Ej: 2 Tacos al pastor, 1 Limonada"
+            ></textarea>
+          </div>
+          <div class="campo-formulario">
+            <label>Valor Total ($)</label>
+            <input type="number" id="campoTotal" placeholder="35000" />
+          </div>
+        </div>
+        <div class="modal-pie">
+          <button class="boton boton-linea" onclick="cerrarModal()">Cancelar</button>
+          <button class="boton boton-primario" onclick="guardarPedidoMesa()">
+            Enviar a Cocina
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script src="mesera.js"></script>
+  </body>
+</html>

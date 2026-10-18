@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enchulados · Panel del restaurante</title>
+    <meta name="theme-color" content="#1B1410" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="panel.css" />
+  </head>
+  <body>
+    <div class="franja-superior"></div>
+
+    <div class="aplicacion">
+      <aside class="barra-lateral" id="barraLateral">
+        <a href="#" class="marca">
+          <svg class="icono-marca" viewBox="0 0 40 40" aria-hidden="true">
+            <path
+              d="M20 5c2.4 3.6 6 4.2 6 8.2a6 6 0 1 1-12 0C14 9.2 17.6 8.6 20 5z"
+              fill="currentColor"
+            />
+            <circle
+              cx="20"
+              cy="26"
+              r="10"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.6"
+            />
+            <circle cx="20" cy="26" r="4" fill="currentColor" />
+          </svg>
+          <span>Enchulados<small>Panel del restaurante</small></span>
+        </a>
+
+        <span class="etiqueta-lateral">Menú principal</span>
+
+        <button class="elemento-navegacion activo" data-vista="panel">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.9"
+          >
+            <rect x="3" y="3" width="7" height="9" rx="2" />
+            <rect x="14" y="3" width="7" height="5" rx="2" />
+            <rect x="14" y="12" width="7" height="9" rx="2" />
+            <rect x="3" y="16" width="7" height="5" rx="2" />
+          </svg>
+          Panel principal
+        </button>
+
+        <button class="elemento-navegacion" data-vista="pedidos">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.9"
+          >
+            <path d="M6 2h12v20l-3-2-3 2-3-2-3 2z" />
+            <path d="M9 8h6M9 12h6" />
+          </svg>
+          Pedidos
+          <span class="pastilla" id="pastillaPedidos">0</span>
+        </button>
+
+        <button class="elemento-navegacion" data-vista="inventario">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.9"
+          >
+            <path d="M3 8l9-5 9 5-9 5z" />
+            <path d="M3 8v8l9 5 9-5V8" />
+            <path d="M12 13v8" />
+          </svg>
+          Inventario
+          <span class="pastilla" id="pastillaInventario">0</span>
+        </button>
+
+        <button class="elemento-navegacion" data-vista="usuarios">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.9"
+          >
+            <circle cx="9" cy="8" r="3.2" />
+            <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+            <path d="M16 5.2A3 3 0 0 1 16 11" />
+            <path d="M18 20c0-2.4-.9-4.5-2.3-6" />
+          </svg>
+          Usuarios
+        </button>
+
+        <button class="elemento-navegacion" data-vista="reportes">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.9"
+          >
+            <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+          </svg>
+          Reportes
+        </button>
+
+        <div class="ayuda-lateral">
+          <h4>¿Primera vez aquí?</h4>
+          <p>
+            Usa el menú lateral para navegar entre las distintas secciones del
+            sistema.
+          </p>
+        </div>
+      </aside>
+
+      <div class="superposicion" id="superposicion"></div>
+
+      <div class="principal">
+        <header class="barra-superior">
+          <button class="hamburguesa" id="hamburguesa" aria-label="Abrir menú">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M3 6h18M3 12h18M3 18h18" />
+            </svg>
+          </button>
+
+          <div class="titulo-superior">
+            <h1 id="tituloVista">Panel principal</h1>
+            <p id="subtituloVista">Resumen del día en Enchulados</p>
+          </div>
+
+          <div class="herramientas-superiores">
+            <label class="busqueda">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <circle cx="11" cy="11" r="7" />
+                <path d="M20 20l-3.5-3.5" />
+              </svg>
+              <input
+                type="search"
+                id="buscador"
+                placeholder="Buscar en esta pantalla..."
+              />
+            </label>
+            <span class="etiqueta-fecha">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.9"
+              >
+                <rect x="3" y="5" width="18" height="16" rx="3" />
+                <path d="M3 10h18M8 3v4M16 3v4" />
+              </svg>
+              <span id="fechaHoy">—</span>
+            </span>
+            <div class="ficha-usuario">
+              <span class="avatar" id="avatarSesion">EA</span>
+              <div>
+                <b id="nombreSesion">Enchulados Admin</b>
+                <span id="rolSesion">Administrador</span>
+              </div>
+              <button
+                class="boton-salir"
+                onclick="cerrarSesion()"
+                title="Cerrar sesión"
+              >
+                Salir
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main class="contenido">
+          <section class="vista activo" id="vista-panel">
+            <div class="seccion-bienvenida">
+              <h2>Buen día. Este es el estado de tu restaurante hoy.</h2>
+              <p>
+                Todo lo importante está aquí resumido. Haz clic en las opciones
+                rápidas para gestionar el negocio.
+              </p>
+              <div class="acciones-bienvenida">
+                <button class="boton boton-primario" onclick="abrirModal('pedido')">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                  >
+                    <path d="M12 5v14M5 12h14" />
+                  </svg>
+                  Registrar pedido
+                </button>
+                <button class="boton boton-suave" onclick="abrirModal('insumo')">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M3 8l9-5 9 5-9 5z" />
+                    <path d="M3 8v8l9 5 9-5V8" />
+                  </svg>
+                  Entrada de insumo
+                </button>
+                <button class="boton boton-suave" onclick="cambiarVista('reportes')">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                  >
+                    <path d="M4 20V10M10 20V4M16 20v-7M22 20H2" />
+                  </svg>
+                  Ver reportes
+                </button>
+              </div>
+            </div>
+
+            <div class="cuadricula-kpi">
+              <div class="tarjeta-kpi">
+                <div class="etiqueta-kpi">Ventas de hoy</div>
+                <div class="valor-kpi" id="kpiVentas">$0</div>
+                <div class="pie-kpi" id="kpiVentasPie">Sin pedidos registrados</div>
+              </div>
+              <div class="tarjeta-kpi maiz">
+                <div class="etiqueta-kpi">Pedidos en curso</div>
+                <div class="valor-kpi" id="kpiActivos">0</div>
+                <div class="pie-kpi">Aún por entregar</div>
+              </div>
+              <div class="tarjeta-kpi jade">
+                <div class="etiqueta-kpi">Mesas ocupadas</div>
+                <div class="valor-kpi" id="kpiMesas">0 / 12</div>
+                <div class="pie-kpi">Capacidad del salón</div>
+              </div>
+              <div class="tarjeta-kpi gris">
+                <div class="etiqueta-kpi">Insumos por agotarse</div>
+                <div class="valor-kpi" id="kpiInsumos">0</div>
+                <div class="pie-kpi">Revisa antes del servicio</div>
+              </div>
+            </div>
+
+            <div class="cuadricula-reportes">
+              <div class="tarjeta">
+                <div class="cabecera-tarjeta">
+                  <h2>Primeros pasos</h2>
+                  <span class="subtitulo-tarjeta"
+                    >Marca cada punto cuando lo tengas listo</span
+                  >
+                </div>
+                <div class="cuerpo-tarjeta">
+                  <div class="contenedor-pasos" id="listaPasos"></div>
+                </div>
+              </div>
+
+              <div class="tarjeta">
+                <div class="cabecera-tarjeta">
+                  <h2>Notas y Cierre de Caja</h2>
+                  <span class="subtitulo-tarjeta">Reporte de novedades del turno</span>
+                </div>
+                <div class="cuerpo-tarjeta">
+                  <div
+                    id="panelNotasCaja"
+                    style="
+                      font-size: 0.88rem;
+                      color: var(--txt);
+                      background: var(--crema);
+                      padding: 1rem;
+                      border-radius: 12px;
+                      border: 1px solid var(--linea);
+                      min-height: 80px;
+                      white-space: pre-wrap;
+                    "
+                  >
+                    No hay notas registradas por la cajera todavía.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tarjeta">
+              <div class="cabecera-tarjeta">
+                <h2>Últimos pedidos</h2>
+                <div class="herramientas-tarjeta">
+                  <button
+                    class="boton boton-linea boton-mini"
+                    onclick="cambiarVista('pedidos')"
+                  >
+                    Ver todos
+                  </button>
+                </div>
+              </div>
+              <div class="contenedor-tabla">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>N°</th>
+                      <th>CLIENTE / MESA</th>
+                      <th>DETALLE</th>
+                      <th>ESTADO</th>
+                      <th>TOTAL</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tablaRecientes"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="vista" id="vista-pedidos">
+            <div class="tarjeta">
+              <div class="cabecera-tarjeta">
+                <h2>Pedidos del día</h2>
+                <span class="subtitulo-tarjeta"
+                  >Cambia el estado con la lista desplegable</span
+                >
+                <div class="herramientas-tarjeta">
+                  <button
+                    class="boton boton-primario boton-mini"
+                    onclick="abrirModal('pedido')"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                    >
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Nuevo pedido
+                  </button>
+                </div>
+              </div>
+              <div class="contenedor-tabla">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>N°</th>
+                      <th>CLIENTE / MESA</th>
+                      <th>TIPO</th>
+                      <th>DETALLE</th>
+                      <th>ESTADO</th>
+                      <th>TOTAL</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody id="tablaPedidos"></tbody>
+                </table>
+              </div>
+            </div>
+          </section>
+
+          <section class="vista" id="vista-inventario">
+            <div class="tarjeta">
+              <div class="cabecera-tarjeta">
+                <h2>Inventario de insumos</h2>
+                <span class="subtitulo-tarjeta">Usa + y − para ajustar las cantidades</span>
+                <div class="herramientas-tarjeta">
+                  <button
+                    class="boton boton-primario boton-mini"
+                    onclick="abrirModal('insumo')"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                    >
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Agregar insumo
+                  </button>
+                </div>
+              </div>
+              <div class="cuerpo-tarjeta" id="listaInventario"></div>
+            </div>
+          </section>
+
+          <section class="vista" id="vista-usuarios">
+            <div class="tarjeta">
+              <div class="cabecera-tarjeta">
+                <h2>Equipo del restaurante</h2>
+                <span class="subtitulo-tarjeta"
+                  >El interruptor activa o desactiva el acceso a la
+                  plataforma</span
+                >
+                <div class="herramientas-tarjeta">
+                  <button
+                    class="boton boton-primario boton-mini"
+                    onclick="abrirModal('usuario')"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2.2"
+                    >
+                      <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Agregar usuario
+                  </button>
+                </div>
+              </div>
+              <div class="cuerpo-tarjeta" id="listaUsuarios"></div>
+            </div>
+          </section>
+
+          <section class="vista" id="vista-reportes">
+            <div class="cuadricula-kpi">
+              <div class="tarjeta-kpi">
+                <div class="etiqueta-kpi">Ventas de la semana</div>
+                <div class="valor-kpi">$8.4M</div>
+                <div class="pie-kpi">7 días cerrados</div>
+              </div>
+              <div class="tarjeta-kpi maiz">
+                <div class="etiqueta-kpi">Ticket promedio</div>
+                <div class="valor-kpi">$41.500</div>
+                <div class="pie-kpi">Por pedido entregado</div>
+              </div>
+              <div class="tarjeta-kpi jade">
+                <div class="etiqueta-kpi">Pedidos atendidos</div>
+                <div class="valor-kpi">203</div>
+                <div class="pie-kpi">Esta semana</div>
+              </div>
+              <div class="tarjeta-kpi gris">
+                <div class="etiqueta-kpi">Producto más vendido</div>
+                <div class="valor-kpi" style="font-size: 1.3rem">Tacos al pastor</div>
+                <div class="pie-kpi">68 porciones</div>
+              </div>
+            </div>
+
+            <div class="cuadricula-reportes">
+              <div class="tarjeta">
+                <div class="cabecera-tarjeta">
+                  <h2>Ventas de los últimos 7 días</h2>
+                  <div class="herramientas-tarjeta">
+                    <button
+                      class="boton boton-linea boton-mini"
+                      onclick="
+                        notificar(
+                          'ok',
+                          'Reporte generado',
+                          'Resumen semanal descargado.',
+                        )
+                      "
+                    >
+                      Descargar
+                    </button>
+                  </div>
+                </div>
+                <div class="cuerpo-tarjeta">
+                  <div class="grafica" id="chartVentas"></div>
+                </div>
+              </div>
+
+              <div class="tarjeta">
+                <div class="cabecera-tarjeta">
+                  <h2>Productos más pedidos</h2>
+                </div>
+                <div class="cuerpo-tarjeta">
+                  <div class="ranking" id="rankProductos"></div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+
+    <div class="modal" id="modal">
+      <div class="modal-fondo" onclick="cerrarModal()"></div>
+      <div class="modal-caja">
+        <div class="modal-cabecera">
+          <div>
+            <h2 id="modalTitulo">Título</h2>
+            <p id="modalPista">Descripción</p>
+          </div>
+          <button class="boton-cerrar" onclick="cerrarModal()" aria-label="Cerrar">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+            >
+              <path d="M6 6l12 12M18 6L6 18" />
+            </svg>
+          </button>
+        </div>
+        <div class="modal-cuerpo" id="modalCuerpo"></div>
+        <div class="modal-pie">
+          <button class="boton boton-linea" onclick="cerrarModal()">Cancelar</button>
+          <button class="boton boton-primario" id="modalGuardar">Guardar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="contenedor-notificaciones" id="contenedorNotificaciones"></div>
+
+    <script src="panel.js"></script>
+  </body>
+</html>
