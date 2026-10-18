@@ -19,7 +19,7 @@ async function validarLogin(e) {
   ocultarError();
 
   const usuarioIngresado = document
-    .getElementById("usuario")
+    .getElementById("users")
     .value.trim()
     .toLowerCase();
   const contrasenaIngresada = document
