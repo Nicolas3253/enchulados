@@ -23,7 +23,7 @@ async function validarLogin(e) {
     .value.trim()
     .toLowerCase();
   const contrasenaIngresada = document
-    .getElementById("contrasena")
+    .getElementById("password")
     .value.trim();
 
   if (!usuarioIngresado || !contrasenaIngresada) {
@@ -33,7 +33,7 @@ async function validarLogin(e) {
 
   try {
     let { data: usuarioEncontrado, error } = await _supabase
-      .from("usuarios")
+      .from("users")
       .select("*")
       .eq("username", usuarioIngresado)
       .single();
