@@ -1,54 +1,7 @@
-const USUARIOS_BASE = [
-  {
-    nombre: "Enchulados Admin",
-    usuario: "admin",
-    clave: "1234",
-    rol: "Administrador",
-    turnoInicio: "00:00",
-    turnoFin: "23:59",
-    activo: true,
-  },
-  {
-    nombre: "Gisella Pardo",
-    usuario: "gisella",
-    clave: "1234",
-    rol: "Cajera",
-    turnoInicio: "14:00",
-    turnoFin: "22:00",
-    activo: true,
-  },
-  {
-    nombre: "Dayana García",
-    usuario: "dayana",
-    clave: "1234",
-    rol: "Mesera",
-    turnoInicio: "08:00",
-    turnoFin: "21:00",
-    activo: true,
-  },
-  {
-    nombre: "Sharon González",
-    usuario: "sharon",
-    clave: "1234",
-    rol: "Administradora",
-    turnoInicio: "00:00",
-    turnoFin: "23:59",
-    activo: true,
-  },
-  {
-    nombre: "Carlos Rojas",
-    usuario: "carlos",
-    clave: "1234",
-    rol: "Repartidor",
-    turnoInicio: "18:00",
-    turnoFin: "23:00",
-    activo: false,
-  },
-];
+const urlSupabase = "https://pulredetdokxytrzdmdf.supabase.co";
+const llaveAnonima = "sb_publishable_PjHlobWwih51omYBr-c8Kw_VAdgl72d";
 
-if (!localStorage.getItem("enchulados_usuarios")) {
-  localStorage.setItem("enchulados_usuarios", JSON.stringify(USUARIOS_BASE));
-}
+const _supabase = supabase.createClient(urlSupabase, llaveAnonima);
 
 function mostrarError(mensaje) {
   const caja = document.getElementById("cajaAlerta");
@@ -61,7 +14,7 @@ function ocultarError() {
   document.getElementById("cajaAlerta").style.display = "none";
 }
 
-function validarLogin(e) {
+async function validarLogin(e) {
   e.preventDefault();
   ocultarError();
 
@@ -73,66 +26,81 @@ function validarLogin(e) {
     .getElementById("contrasena")
     .value.trim();
 
-  const listaUsuarios =
-    JSON.parse(localStorage.getItem("enchulados_usuarios")) || USUARIOS_BASE;
-
-  const usuarioEncontrado = listaUsuarios.find(
-    (u) =>
-      u.usuario.toLowerCase() === usuarioIngresado &&
-      u.clave === contrasenaIngresada,
-  );
-
-  if (!usuarioEncontrado) {
-    mostrarError("Usuario o contraseña incorrectos.");
+  if (!usuarioIngresado || !contrasenaIngresada) {
+    mostrarError("Por favor completa todos los campos.");
     return;
   }
 
-  if (!usuarioEncontrado.activo) {
-    mostrarError("Acceso deshabilitado. Consulta con administración.");
-    return;
-  }
+  try {
+    let { data: usuarioEncontrado, error } = await _supabase
+      .from("usuarios")
+      .select("*")
+      .eq("username", usuarioIngresado)
+      .single();
 
-  if (
-    usuarioEncontrado.rol !== "Administrador" &&
-    usuarioEncontrado.rol !== "Administradora"
-  ) {
-    const ahora = new Date();
-    const horaActual =
-      ahora.getHours().toString().padStart(2, "0") +
-      ":" +
-      ahora.getMinutes().toString().padStart(2, "0");
-
-    const inicio = usuarioEncontrado.turnoInicio;
-    const fin = usuarioEncontrado.turnoFin;
-
-    if (horaActual < inicio || horaActual > fin) {
-      mostrarError(
-        `Fuera de turno laboral. Tu horario asignado es de ${inicio} a ${fin}.`,
-      );
+    if (error || !usuarioEncontrado) {
+      mostrarError("Usuario o contraseña incorrectos.");
       return;
     }
-  }
 
-  localStorage.setItem(
-    "enchulados_sesion",
-    JSON.stringify({
-      nombre: usuarioEncontrado.nombre,
-      usuario: usuarioEncontrado.usuario,
-      rol: usuarioEncontrado.rol,
-      fechaIngreso: new Date().toISOString(),
-    }),
-  );
+    if (usuarioEncontrado.password !== contrasenaIngresada) {
+      mostrarError("Usuario o contraseña incorrectos.");
+      return;
+    }
 
-  const rol = usuarioEncontrado.rol;
-  if (rol === "Administrador" || rol === "Administradora") {
-    window.location.href = "panel.html";
-  } else if (rol === "Mesera" || rol === "Mesero") {
-    window.location.href = "mesera.html";
-  } else if (rol === "Cajera" || rol === "Cajero") {
-    window.location.href = "caja.html";
-  } else if (rol === "Repartidor" || rol === "Domiciliario") {
-    window.location.href = "repartidor.html";
-  } else {
-    window.location.href = "panel.html";
+    if (!usuarioEncontrado.is_active) {
+      mostrarError("Acceso deshabilitado. Consulta con administración.");
+      return;
+    }
+
+    const rol = usuarioEncontrado.role;
+
+    if (rol !== "Administrador" && rol !== "Administradora") {
+      const ahora = new Date();
+      const horaActual =
+        ahora.getHours().toString().padStart(2, "0") +
+        ":" +
+        ahora.getMinutes().toString().padStart(2, "0");
+
+      const inicio = usuarioEncontrado.check_in
+        ? usuarioEncontrado.check_in.slice(0, 5)
+        : "00:00";
+      const fin = usuarioEncontrado.check_out
+        ? usuarioEncontrado.check_out.slice(0, 5)
+        : "23:59";
+
+      if (horaActual < inicio || horaActual > fin) {
+        mostrarError(
+          `Fuera de turno laboral. Tu horario asignado es de ${inicio} a ${fin}.`,
+        );
+        return;
+      }
+    }
+
+    localStorage.setItem(
+      "enchulados_sesion",
+      JSON.stringify({
+        id: usuarioEncontrado.id,
+        nombre: usuarioEncontrado.name,
+        usuario: usuarioEncontrado.username,
+        rol: usuarioEncontrado.role,
+        fechaIngreso: new Date().toISOString(),
+      }),
+    );
+
+    if (rol === "Administrador" || rol === "Administradora") {
+      window.location.href = "panel.html";
+    } else if (rol === "Mesera" || rol === "Mesero") {
+      window.location.href = "mesera.html";
+    } else if (rol === "Cajera" || rol === "Cajero") {
+      window.location.href = "caja.html";
+    } else if (rol === "Repartidor" || rol === "Domiciliario") {
+      window.location.href = "repartidor.html";
+    } else {
+      window.location.href = "panel.html";
+    }
+  } catch (err) {
+    console.error("Error en conexión:", err);
+    mostrarError("Error al conectar con la base de datos.");
   }
 }
