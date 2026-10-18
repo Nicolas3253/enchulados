@@ -18,13 +18,17 @@ async function validarLogin(e) {
   e.preventDefault();
   ocultarError();
 
-  const usuarioIngresado = document
-    .getElementById("users")
-    .value.trim()
-    .toLowerCase();
-  const contrasenaIngresada = document
-    .getElementById("password")
-    .value.trim();
+  // Asegúrate de que id="usuario" e id="contrasena" sean los mismos IDs de tus <input> en el HTML
+  const elementoUsuario = document.getElementById("usuario");
+  const elementoContrasena = document.getElementById("contrasena");
+
+  if (!elementoUsuario || !elementoContrasena) {
+    console.error("No se encontraron los inputs 'usuario' o 'contrasena' en el HTML.");
+    return;
+  }
+
+  const usuarioIngresado = elementoUsuario.value.trim().toLowerCase();
+  const contrasenaIngresada = elementoContrasena.value.trim();
 
   if (!usuarioIngresado || !contrasenaIngresada) {
     mostrarError("Por favor completa todos los campos.");
@@ -32,6 +36,7 @@ async function validarLogin(e) {
   }
 
   try {
+    // IMPORTANTE: Aquí cambiamos "usuarios" por "users" para que coincida con Supabase
     let { data: usuarioEncontrado, error } = await _supabase
       .from("users")
       .select("*")
@@ -48,14 +53,15 @@ async function validarLogin(e) {
       return;
     }
 
-    if (!usuarioEncontrado.is_active) {
+    if (usuarioEncontrado.is_active === false) {
       mostrarError("Acceso deshabilitado. Consulta con administración.");
       return;
     }
 
     const rol = usuarioEncontrado.role;
 
-    if (rol !== "Administrador" && rol !== "Administradora") {
+    // Validación de horario de turno (solo si check_in y check_out están presentes)
+    if (rol !== "Administrador" && rol !== "administrador" && rol !== "Administradora") {
       const ahora = new Date();
       const horaActual =
         ahora.getHours().toString().padStart(2, "0") +
@@ -88,13 +94,14 @@ async function validarLogin(e) {
       }),
     );
 
-    if (rol === "Administrador" || rol === "Administradora") {
+    const rolNormalizado = rol.toLowerCase();
+    if (rolNormalizado.includes("admin")) {
       window.location.href = "panel.html";
-    } else if (rol === "Mesera" || rol === "Mesero") {
+    } else if (rolNormalizado.includes("mese")) {
       window.location.href = "mesera.html";
-    } else if (rol === "Cajera" || rol === "Cajero") {
+    } else if (rolNormalizado.includes("caje")) {
       window.location.href = "caja.html";
-    } else if (rol === "Repartidor" || rol === "Domiciliario") {
+    } else if (rolNormalizado.includes("repart") || rolNormalizado.includes("domici")) {
       window.location.href = "repartidor.html";
     } else {
       window.location.href = "panel.html";
